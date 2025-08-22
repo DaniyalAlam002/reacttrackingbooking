@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { useState } from 'react'
+import EducationModal from '../components/EducationModal'
 
 const Home = () => {
   const [newsletterEmail, setNewsletterEmail] = useState('')
@@ -8,6 +9,7 @@ const Home = () => {
     phone: '',
     message: ''
   })
+  const [isEducationModalOpen, setIsEducationModalOpen] = useState(false)
 
   const handleNewsletterSubmit = (e) => {
     e.preventDefault()
@@ -101,6 +103,34 @@ const Home = () => {
               <h3 className="text-xl font-semibold text-gray-900 mb-2">Patient-Focused</h3>
               <p className="text-gray-600">Your comfort and well-being are our top priorities in everything we do.</p>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Education CTA Section */}
+      <section className="py-20 bg-gradient-to-r from-blue-50 to-indigo-100">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="bg-white rounded-2xl p-8 shadow-xl">
+            <div className="w-20 h-20 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-6">
+              <svg className="w-10 h-10 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 14l9-5-9-5-9 5 9 5z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
+              </svg>
+            </div>
+            
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              Share Your Educational Journey
+            </h2>
+            <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+              Help us understand your educational background and future aspirations. This information helps us provide better personalized care and support.
+            </p>
+            
+            <button
+              onClick={() => setIsEducationModalOpen(true)}
+              className="btn-primary text-lg px-8 py-4 hover:scale-105 transition-transform"
+            >
+              Share Education Details
+            </button>
           </div>
         </div>
       </section>
@@ -211,6 +241,16 @@ const Home = () => {
           </div>
         </div>
       </section>
+
+      {/* Education Modal */}
+      <EducationModal
+        isOpen={isEducationModalOpen}
+        onClose={() => setIsEducationModalOpen(false)}
+        onSubmit={(data) => {
+          console.log('Education data submitted from home:', data)
+          alert('Thank you for sharing your education details!')
+        }}
+      />
     </div>
   )
 }

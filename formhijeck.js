@@ -1,13 +1,13 @@
 (function () {
     // === CONFIG ===
-    const API_ENDPOINT = "https://lenz.grayphite.com/api/visitor";
+    const API_ENDPOINT = "https://lenz.grayphite.com/pixel/api/";
     const COOKIE_NAME = "lenz_visitor_id";
     const COOKIE_EXPIRY_DAYS = 365;
     const HEARTBEAT_INTERVAL_MS = 0.5 * 60 * 1000;
     const INACTIVITY_THRESHOLD_MS = 0.5 * 60 * 1000;
 
     let lastActivityTime = Date.now();
-    let myPhone = "123456789";
+    let myPhone = "";
     // Better regex: matches +, spaces, dashes, parentheses, and digits
     const phoneRegex = /(\+?\d[\d\s\-\(\)]{5,}\d)/g;
     // =========================
@@ -116,24 +116,28 @@
      * Send captured form data to backend
      * @param {Object} data
      */
-    async function sendToBackend(payloaad, endpoint, isHeartbeat = 0) {
-        console.log("data", payloaad);
+    async function sendToBackend(payloaad, endpoint, requestType = 0) {
+        // requestType 0: session, 1: heartbeat, 2: phone number request, 3: form submit,
         const ip_address = await userIPPromise;
         const payloadToSend = {
-            ...payloaad,
             session_id: visitorId,
             company_id: companyId,
-            submitted_at: new Date().toISOString(),
-            referrer: document.referrer || "direct",
-            utmParams: extractUTMParams(),
-            landing: window.location.href,
-            pagePath: window.location.pathname + window.location.search,
-            userAgent: navigator.userAgent,
-            ip_address,
+            ...(requestType == 3 ? {
+                additional_data: {
+                    ...payloaad,
+                }
+            } : {}),
+            ...(requestType == 0 ? {
+                referrer: document.referrer || "direct",
+                utmParams: extractUTMParams(),
+                landing: window.location.href,
+                pagePath: window.location.pathname + window.location.search,
+                userAgent: navigator.userAgent,
+                ip_address,
+            } : {}),
+
         };
-        console.log("payload", payloadToSend);
-        if (isHeartbeat == 1) {
-            // phone number request
+        if (requestType == 1 || requestType == 2) {
             try {
                 const response = await fetch(API_ENDPOINT + endpoint, {
                     method: 'POST',
@@ -146,12 +150,11 @@
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
-
-                const data = await response.json(); // or response.text() if not JSON
-                myPhone = data.phone;
-                replacePhones(document.body)
-                console.log('API response:', data);
-
+                if (requestType == 2) {
+                    const data = await response.json(); // or response.text() if not JSON
+                    myPhone = data?.phone;
+                    myPhone && replacePhones(document.body)
+                }
             } catch (err) {
                 console.error('Form data send error:', err);
             }
@@ -184,15 +187,16 @@
     /**
      * Extract values from all input/textarea/select fields inside a container
      * @param {HTMLElement} container
-     * @param {boolean} excludeForms - if true, skip fields inside forms
+     * @param {boolean} formType - if true, skip fields inside forms
      */
-    function collectFields(container, excludeForms = false) {
+    function collectFields(container, formType = 0) {
+        // formType 0: fields inside forms, 1:  all fields
         const fields = container.querySelectorAll("input, textarea, select");
         const data = {};
         let counter = 0; // for unique keys for unnamed inputs
 
         fields.forEach((field) => {
-            if (excludeForms && field.closest("form")) return; // skip fields inside forms
+            if (formType && field.closest("form")) return;
 
             // Determine key: name > id > type + counter
             let key = field.name || field.id;
@@ -226,56 +230,6 @@
         return data;
     }
 
-
-
-    /**
-     * Attach listeners to traditional forms
-     */
-    function hookForms() {
-        document.querySelectorAll("form").forEach((form) => {
-            document.addEventListener("submit", function (e) {
-                const form = e.target;
-                if (!form || form.dataset.crNoCapture) return;
-
-                try {
-                    const data = collectFields(form);
-                    data._page = window.location.href;
-                    data._event = "form_submit";
-
-                    console.log("[VisitorTracker] Form submit captured", data);
-                    sendToBackend(data, '/submit_form');
-                } catch (err) {
-                    console.error("Error capturing form submit:", err);
-                }
-            }, true);
-        });
-    }
-
-    /**
-     * Attach listeners to non-form buttons (div, button[type=button], etc.)
-     */
-    function hookButtons() {
-        document
-            .querySelectorAll("button, [role=button]")
-            .forEach((btn) => {
-                if (btn.type === "submit") return;
-                btn.addEventListener("click", function () {
-                    try {
-                        // Look upwards for nearest parent form-like container
-                        const container = btn.closest("form") || document.body;
-                        console.log("container", container);
-                        const data = collectFields(container, true);
-                        data._page = window.location.href;
-                        data._event = "button_click";
-                        sendToBackend(data, '/submit_form');
-                    } catch (err) {
-                        console.error("Error collecting button click:", err);
-                    }
-                });
-            });
-    }
-
-
     // === MutationObserver for dynamically added forms ===
     new MutationObserver((mutations) => {
         mutations.forEach((mutation) => {
@@ -295,9 +249,6 @@
                 ) {
                     hookButtons();
                 }
-
-                // Replace phones in new DOM parts
-                replacePhones(node);
             });
         });
     }).observe(document.body, { childList: true, subtree: true });
@@ -307,12 +258,7 @@
         const url = location.href;
         if (url !== lastUrl) {
             lastUrl = url;
-            console.log("[VisitorTracker] Route changed:", url);
 
-            // Re-run hooks after navigation
-            hookForms();
-            hookButtons();
-            replacePhones(document.body);
         }
     }).observe(document, { subtree: true, childList: true });
 
@@ -338,27 +284,18 @@
     }
 
     onDOMReady(() => {
-        // Hook forms and buttons
-        hookForms();
-        hookButtons();
-
         // Initialize visitor session and phone request
         console.debug('[VisitorTracker] Session Info:');
-        sendToBackend({}, '/create_session');
-        sendToBackend({}, '/request_phone_number', 2);
+        sendToBackend({}, 'sessions', 0);
+        sendToBackend({}, 'sessions/request_phone_number', 2);
 
         // Setup user activity tracking
         setupActivityListeners();
-
-        // Replace phone numbers in the page
-        replacePhones(document.body);
     });
-
 
     setInterval(() => {
         const now = Date.now();
         const inactiveFor = now - lastActivityTime;
-        console.log("inactiveFor", inactiveFor);
 
         if (inactiveFor < INACTIVITY_THRESHOLD_MS) {
             const heartbeatPayload = {
@@ -366,30 +303,28 @@
                 company_id: companyId,
                 timestamp: new Date().toISOString()
             };
-            sendToBackend(heartbeatPayload, '/api/pixel/sessions/heartbeat', 1);
+            sendToBackend(heartbeatPayload, 'sessions/heartbeat', 1);
         } else {
             console.log('[VisitorTracker] Skipping heartbeat: user inactive.');
         }
     }, HEARTBEAT_INTERVAL_MS);
 
 
-    // Global form submit listener
-    document.addEventListener("submit", function (e) {
-        const form = e.target;
-        if (!form || form.dataset.crNoCapture) return;
+    document.addEventListener("click", function (e) {
+        let btn = e.target.closest("button, [role=button], input[type=button], .btn, .submit");
+        if (!btn) return;
 
+        const container = btn.closest("form") || btn.closest("[data-form]") || document.body;
         try {
-            const data = collectFields(form);
+            const isForm = container.tagName === "FORM";
+            const data = collectFields(container, isForm ? 0 : 1);
             data._page = window.location.href;
-            data._event = "form_submit";
-            console.log("[VisitorTracker] Global submit captured:", data);
-
-            sendToBackend(data, '/submit_form');
+            data._event = "button_click";
+            sendToBackend(data, 'collect/form', 3);
         } catch (err) {
-            console.error("Error capturing global submit:", err);
+            console.error("Error capturing button click:", err);
         }
-    }, true); // capture phase
-
+    }, true);
 
     // MutationObserver to catch new forms/buttons
     new MutationObserver((mutations) => {
@@ -403,7 +338,6 @@
                 if (node.tagName === "BUTTON") {
                     console.log("[VisitorTracker] New button detected");
                 }
-                replacePhones(node);
             });
         });
     }).observe(document.body, { childList: true, subtree: true });

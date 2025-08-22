@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import EducationForm from '../components/EducationForm'
 
 const Booking = () => {
   const [formData, setFormData] = useState({
@@ -512,6 +513,8 @@ const Booking = () => {
             </div>
           </div>
 
+         
+
           {/* Submit Button */}
           <div className="pt-6 border-t border-gray-200">
             <button
@@ -525,7 +528,21 @@ const Booking = () => {
             </p>
           </div>
         </form>
+         {/* Education Details Section */}
+         <div className='mt-10'>
+            <h2 className="text-2xl font-semibold text-gray-900 mb-6 border-b border-gray-200 pb-2">
+              Education Details
+            </h2>
+            <EducationForm 
+              onSubmit={(data) => {
+                console.log('Education data submitted:', data)
+                // You can add this to formData if needed
+              }}
+              submitButtonText="Save Education Details"
+            />
+          </div>
       </div>
+      
     </div>
   )
 }
