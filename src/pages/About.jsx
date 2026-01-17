@@ -68,7 +68,7 @@ const About = () => {
           {/* Phone Number Display */}
           <div className="bg-white rounded-2xl p-6 shadow-xl mb-8 inline-block">
             <p className="text-2xl font-bold text-primary-600 mb-2">📞 Contact Us</p>
-            <p className="text-3xl font-bold text-gray-900">(555) 123-4567</p>
+            <p className="text-3xl font-bold text-gray-900">+1 206-707-6776</p>
             <p className="text-gray-600">Available Mon-Fri 8AM-6PM</p>
           </div>
 
@@ -106,7 +106,7 @@ const About = () => {
               {/* Phone Number Display */}
               <div className="bg-primary-50 rounded-lg p-4 inline-block">
                 <p className="text-lg font-semibold text-primary-600">📞 Call for more information:</p>
-                <p className="text-2xl font-bold text-gray-900">(555) 123-4567</p>
+                <p className="text-2xl font-bold text-gray-900">+1 206-707-6776</p>
               </div>
             </div>
             
@@ -225,7 +225,7 @@ const About = () => {
           {/* Phone Number Display */}
           <div className="bg-white rounded-2xl p-6 shadow-xl mb-8 inline-block">
             <p className="text-2xl font-bold text-primary-600 mb-2">📞 Call us now:</p>
-            <p className="text-3xl font-bold text-gray-900">(555) 123-4567</p>
+            <p className="text-3xl font-bold text-gray-900">+1 206-707-6776</p>
           </div>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">

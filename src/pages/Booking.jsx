@@ -75,7 +75,7 @@ const Booking = () => {
           {/* Phone Number Display */}
           <div className="mt-6 p-4 bg-primary-50 rounded-lg inline-block">
             <p className="text-lg font-semibold text-primary-600">📞 Need help? Call us:</p>
-            <p className="text-2xl font-bold text-gray-900">(555) 123-4567</p>
+            <p className="text-2xl font-bold text-gray-900">+1 206-707-6776</p>
           </div>
         </div>
 

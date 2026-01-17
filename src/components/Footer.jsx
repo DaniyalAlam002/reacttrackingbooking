@@ -20,7 +20,7 @@ const Footer = () => {
             <div className="space-y-2">
               <p className="flex items-center space-x-2">
                 <span className="text-primary-400">📞</span>
-                <span className="font-medium">(555) 123-4567</span>
+                <span className="font-medium">+1 206-707-6776</span>
               </p>
               <p className="flex items-center space-x-2">
                 <span className="text-primary-400">📍</span>
@@ -59,7 +59,7 @@ const Footer = () => {
         <div className="border-t border-gray-800 mt-8 pt-8 text-center">
           <p className="text-gray-400">
             © 2024 HealthCare Clinic. All rights reserved. | 
-            <span className="text-primary-400 font-medium ml-1">📞 (555) 123-4567</span>
+            <span className="text-primary-400 font-medium ml-1">📞 +1 206-707-6776</span>
           </p>
         </div>
       </div>

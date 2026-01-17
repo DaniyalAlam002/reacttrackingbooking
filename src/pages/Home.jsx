@@ -44,7 +44,7 @@ const Home = () => {
             {/* Phone Number Display */}
             <div className="bg-white rounded-2xl p-6 shadow-xl mb-8 inline-block">
               <p className="text-2xl font-bold text-primary-600 mb-2">📞 Call Us Now</p>
-              <p className="text-3xl font-bold text-gray-900">(555) 123-4567</p>
+              <p className="text-3xl font-bold text-gray-900">+1 206-707-6776</p>
               <p className="text-gray-600">Available Mon-Fri 8AM-6PM</p>
             </div>
 
@@ -180,7 +180,7 @@ const Home = () => {
             {/* Phone Number Display */}
             <div className="mt-6 p-4 bg-primary-50 rounded-lg inline-block">
               <p className="text-lg font-semibold text-primary-600">📞 Call us directly:</p>
-              <p className="text-2xl font-bold text-gray-900">(555) 123-4567</p>
+              <p className="text-2xl font-bold text-gray-900">+1 206-707-6776</p>
             </div>
           </div>
 
