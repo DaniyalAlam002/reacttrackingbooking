@@ -75,7 +75,7 @@ const About = () => {
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link to="/book" className="btn-primary text-lg px-8 py-4">
-              Book Your Appointment
+              Schedule Your Expert Consultation
             </Link>
             <Link to="/" className="btn-secondary text-lg px-8 py-4">
               Back to Home
