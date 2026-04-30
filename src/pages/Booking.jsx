@@ -69,7 +69,7 @@ const Booking = () => {
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-gray-900 mb-4">Streamlined Booking for All Your Health Needs</h1>
           <p className="text-xl text-gray-600">
-            Fill out the form below to schedule your appointment with our healthcare professionals.
+            Fill out the form below to schedule your appointment with our experienced healthcare professionals, committed to delivering excellence in every visit.
           </p>
           
           {/* Phone Number Display */}
