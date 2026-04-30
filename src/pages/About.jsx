@@ -9,7 +9,7 @@ const About = () => {
       experience: '15+ years',
       education: 'Harvard Medical School',
       image: '👩‍⚕️',
-      description: 'Dr. Smith specializes in comprehensive family care and preventive medicine. She believes in building long-term relationships with her patients.'
+      description: 'Dr. Smith specializes in comprehensive family care, preventive medicine, and is driven by evidence-based practices. She emphasizes long-term relationships built on trust and tailored healthcare.'
     },
     {
       id: 2,
