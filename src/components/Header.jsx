@@ -52,7 +52,7 @@ const Header = () => {
                   : 'text-gray-700 hover:text-primary-600 hover:bg-primary-50'
               }`}
             >
-              Book Appointment
+              Secure Your Spot for Quality Care
             </Link>
           </nav>
 
