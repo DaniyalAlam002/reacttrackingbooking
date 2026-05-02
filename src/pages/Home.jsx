@@ -34,7 +34,7 @@ const Home = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="max-w-4xl mx-auto">
             <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
-              Your Health, Our Priority
+              Your Health, Our Priority: Evidence-Based Care Near You
             </h1>
             <p className="text-xl text-gray-600 mb-8">
               Experience exceptional healthcare with our team of dedicated professionals. 
