@@ -34,7 +34,7 @@ const Home = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="max-w-4xl mx-auto">
             <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
-              Your Health, Our Priority
+              Expert Care & Your Health Priority at HealthCare Clinic
             </h1>
             <p className="text-xl text-gray-600 mb-8">
               Experience exceptional healthcare with our team of dedicated professionals. 
@@ -51,7 +51,7 @@ const Home = () => {
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link to="/book" className="btn-primary text-lg px-8 py-4">
-                Secure Your Health Today
+                Book Your Personalized Healthcare Plan
               </Link>
               <Link to="/about" className="btn-secondary text-lg px-8 py-4">
                 Learn More About Us
@@ -69,7 +69,7 @@ const Home = () => {
               Discover Exceptional Medical Care with HealthCare Clinic
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              We provide comprehensive healthcare services with a focus on patient comfort and medical excellence.
+              Our comprehensive services include respiratory care and evidence-based medical practices, ensuring comfort and excellence at every step.
             </p>
           </div>
 
