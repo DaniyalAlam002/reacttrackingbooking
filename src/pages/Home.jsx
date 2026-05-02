@@ -37,7 +37,7 @@ const Home = () => {
               Your Health, Our Priority: Evidence-Based Care Near You
             </h1>
             <p className="text-xl text-gray-600 mb-8">
-              Experience exceptional healthcare with our team of dedicated professionals. 
+              Experience exceptional, evidence-based healthcare with our experienced team. 
               Book your appointment today and take the first step towards better health.
             </p>
             
