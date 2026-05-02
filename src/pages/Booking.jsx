@@ -67,7 +67,7 @@ const Booking = () => {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">Streamlined Booking for All Your Health Needs</h1>
+          <h1 className="text-4xl font-bold text-gray-900 mb-4">Secure and Comprehensive Healthcare Booking Made Easy</h1>
           <p className="text-xl text-gray-600">
             Complete the form to secure your appointment with our expert healthcare team, specializing in evidence-based and comprehensive care solutions.
           </p>
