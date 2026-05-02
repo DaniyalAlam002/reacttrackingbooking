@@ -69,7 +69,7 @@ const Home = () => {
               Discover Exceptional Medical Care with HealthCare Clinic
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              We provide comprehensive healthcare services with a focus on patient comfort and medical excellence.
+              Our comprehensive services include respiratory care and evidence-based medical practices, ensuring comfort and excellence at every step.
             </p>
           </div>
 
